@@ -1,7 +1,9 @@
 <template>
     <jet-authentication-card>
         <template #logo>
-            <jet-authentication-card-logo />
+            <inertia-link :href="route('welcome')">
+                <img :src="'storage/images/logo.png'" alt="Logo" class="w-64">
+            </inertia-link>
         </template>
 
         <jet-validation-errors class="mb-4" />
@@ -43,7 +45,6 @@
 
 <script>
     import JetAuthenticationCard from '@/Jetstream/AuthenticationCard'
-    import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo'
     import JetButton from '@/Jetstream/Button'
     import JetInput from '@/Jetstream/Input'
     import JetCheckbox from '@/Jetstream/Checkbox'
@@ -53,7 +54,6 @@
     export default {
         components: {
             JetAuthenticationCard,
-            JetAuthenticationCardLogo,
             JetButton,
             JetInput,
             JetCheckbox,
