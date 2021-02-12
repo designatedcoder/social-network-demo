@@ -15,7 +15,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [WelcomeController::class, 'show'])->name('welcome');
+Route::middleware(['guest'])->get('/', [WelcomeController::class, 'show'])->name('welcome');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
