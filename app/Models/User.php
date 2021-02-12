@@ -61,6 +61,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['profile'];
+
+    /**
      * Get the default profile photo URL if no profile photo has been uploaded.
      *
      * @return string

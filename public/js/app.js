@@ -5069,6 +5069,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5092,7 +5110,9 @@ __webpack_require__.r(__webpack_exports__);
       form: this.$inertia.form({
         _method: 'PUT',
         name: this.user.name,
+        username: this.user.username,
         email: this.user.email,
+        gender: this.user.profile.gender,
         photo: null
       }),
       photoPreview: null
@@ -33593,6 +33613,38 @@ var render = function() {
               "div",
               { staticClass: "col-span-6 sm:col-span-4" },
               [
+                _c("jet-label", {
+                  attrs: { for: "username", value: "Username" }
+                }),
+                _vm._v(" "),
+                _c("jet-input", {
+                  staticClass: "mt-1 block w-full",
+                  attrs: {
+                    id: "username",
+                    type: "text",
+                    autocomplete: "username"
+                  },
+                  model: {
+                    value: _vm.form.username,
+                    callback: function($$v) {
+                      _vm.$set(_vm.form, "username", $$v)
+                    },
+                    expression: "form.username"
+                  }
+                }),
+                _vm._v(" "),
+                _c("jet-input-error", {
+                  staticClass: "mt-2",
+                  attrs: { message: _vm.form.errors.username }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-span-6 sm:col-span-4" },
+              [
                 _c("jet-label", { attrs: { for: "email", value: "Email" } }),
                 _vm._v(" "),
                 _c("jet-input", {
@@ -33610,6 +33662,73 @@ var render = function() {
                 _c("jet-input-error", {
                   staticClass: "mt-2",
                   attrs: { message: _vm.form.errors.email }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-span-6 sm:col-span-4" },
+              [
+                _c("jet-label", { attrs: { for: "gender", value: "Gender" } }),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.gender,
+                        expression: "form.gender"
+                      }
+                    ],
+                    staticClass: "block focus:border-gray-500 mt-1 w-full",
+                    attrs: { name: "gender", id: "gender" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.form,
+                          "gender",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: { disabled: "" },
+                        domProps: { value: _vm.form.gender }
+                      },
+                      [_vm._v(_vm._s(_vm.form.gender))]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Male" } }, [
+                      _vm._v("Male")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Female" } }, [
+                      _vm._v("Female")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("jet-input-error", {
+                  staticClass: "mt-2",
+                  attrs: { message: _vm.form.errors.gender }
                 })
               ],
               1
