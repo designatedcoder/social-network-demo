@@ -1,29 +1,23 @@
 <template>
-    <app-layout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
+    <pages-layout>
+        <template #title>
+            <div class="flex justify-between items-center w-full">
+                <h2 class="flex items-end font-semibold text-xl text-gray-800 leading-tight">
+                    <img :src="$page.props.user.profile_photo_url" :alt="$page.props.user.username" class="h-8 w-8 rounded-full object-cover">
+                    <span class="capitalize ml-3">Dashboard</span>
+                </h2>
+            </div>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <welcome />
-                </div>
-            </div>
-        </div>
-    </app-layout>
+    </pages-layout>
 </template>
 
 <script>
-    import AppLayout from '@/Layouts/AppLayout'
-    import Welcome from '@/Jetstream/Welcome'
+    import PagesLayout from '@/Layouts/PagesLayout'
 
     export default {
         components: {
-            AppLayout,
-            Welcome,
+            PagesLayout,
         },
     }
 </script>
