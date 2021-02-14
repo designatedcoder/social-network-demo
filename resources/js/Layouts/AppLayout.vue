@@ -13,7 +13,7 @@
                         </div>
 
                         <!-- Navigation Links -->
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <div class="hidden space-x-8 sm:ml-10 sm:flex">
                             <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                 Dashboard
                             </jet-nav-link>
@@ -117,15 +117,15 @@
             </div>
         </nav>
 
-        <!-- Page Sidebar -->
         <div class="flex flex-wrap pt-16 sm:flex-nowrap">
+            <!-- Page Sidebar -->
             <side-bar></side-bar>
-        </div>
 
-        <!-- Page Content -->
-        <main>
-            <slot></slot>
-        </main>
+            <!-- Page Content -->
+            <main>
+                <slot></slot>
+            </main>
+        </div>
 
         <!-- Modal Portal -->
         <portal-target name="modal" multiple>

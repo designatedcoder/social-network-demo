@@ -29241,9 +29241,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  {
-                    staticClass: "hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
-                  },
+                  { staticClass: "hidden space-x-8 sm:ml-10 sm:flex" },
                   [
                     _c(
                       "jet-nav-link",
@@ -29617,11 +29615,9 @@ var render = function() {
       _c(
         "div",
         { staticClass: "flex flex-wrap pt-16 sm:flex-nowrap" },
-        [_c("side-bar")],
+        [_c("side-bar"), _vm._v(" "), _c("main", [_vm._t("default")], 2)],
         1
       ),
-      _vm._v(" "),
-      _c("main", [_vm._t("default")], 2),
       _vm._v(" "),
       _c("portal-target", { attrs: { name: "modal", multiple: "" } })
     ],
