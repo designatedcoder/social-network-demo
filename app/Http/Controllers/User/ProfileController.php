@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
@@ -41,12 +43,13 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show(User $user) {
+        return Inertia::render('User/Profile/Show', [
+            'profile' => $user,
+        ]);
     }
 
     /**
