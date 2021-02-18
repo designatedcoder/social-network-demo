@@ -9,6 +9,8 @@ Vue.mixin({ methods: { route } });
 Vue.use(InertiaPlugin);
 Vue.use(PortalVue);
 
+Vue.component('icon', require('./Components/Icon').default);
+
 const app = document.getElementById('app');
 
 new Vue({
