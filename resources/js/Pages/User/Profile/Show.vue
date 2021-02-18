@@ -6,6 +6,8 @@
                     <img :src="profile.profile_photo_url" :alt="profile.username" class="h-8 w-8 rounded-full object-cover">
                     <span class="capitalize ml-3">{{ `${profile.username}'s Profile` }}</span>
                 </h2>
+
+                <status :profile="profile"></status>
             </div>
         </template>
 
@@ -14,10 +16,12 @@
 
 <script>
     import PagesLayout from '@/Layouts/PagesLayout'
+    import Status from '@/Components/FriendStatus/Status'
     export default {
         props: ['profile'],
         components: {
             PagesLayout,
+            Status
         }
     }
 </script>
