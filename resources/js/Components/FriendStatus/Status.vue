@@ -1,6 +1,10 @@
 <template>
     <div class="flex mt-5 sm:mt-0">
-        <template v-if="$page.props.user.id != profile.id">
+        <template v-if="friendRequestRecievedFrom">
+            <accept :profile="profile"></accept>
+            <ignore :profile="profile" class="ml-3"></ignore>
+        </template>
+        <template v-else-if="$page.props.user.id != profile.id">
             <form @submit.prevent="addFriend">
                 <blue-button type="submit" class="text-xs">
                     Add Friend
@@ -12,11 +16,15 @@
 </template>
 
 <script>
+    import Accept from './Accept'
     import BlueButton from '@/Components/Buttons/BlueButton'
+    import Ignore from './Ignore'
     export default {
-        props: ['profile'],
+        props: ['profile', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom'],
         components: {
+            Accept,
             BlueButton,
+            Ignore,
         },
         data() {
             return {
