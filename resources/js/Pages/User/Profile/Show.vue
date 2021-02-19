@@ -7,7 +7,7 @@
                     <span class="capitalize ml-3">{{ `${profile.username}'s Profile` }}</span>
                 </h2>
 
-                <status :profile="profile"></status>
+                <status :profile="profile" :isFriendsWith="isFriendsWith" :friendRequestSentTo="friendRequestSentTo" :friendRequestRecievedFrom="friendRequestRecievedFrom"></status>
             </div>
         </template>
 
@@ -18,7 +18,7 @@
     import PagesLayout from '@/Layouts/PagesLayout'
     import Status from '@/Components/FriendStatus/Status'
     export default {
-        props: ['profile'],
+        props: ['profile', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom'],
         components: {
             PagesLayout,
             Status
