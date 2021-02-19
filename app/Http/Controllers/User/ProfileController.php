@@ -49,6 +49,9 @@ class ProfileController extends Controller
     public function show(User $user) {
         return Inertia::render('User/Profile/Show', [
             'profile' => $user,
+            'isFriendsWith' => auth()->user()->is_friends_with($user->id),
+            'friendRequestSentTo' => auth()->user()->has_pending_friend_request_sent_to($user->id),
+            'friendRequestRecievedFrom' => auth()->user()->has_pending_friend_request_from($user->id),
         ]);
     }
 
