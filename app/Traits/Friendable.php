@@ -29,6 +29,36 @@ trait Friendable {
         return 0;
     }
 
+    public function accept_friend($requester) {
+        if($this->has_pending_friend_request_from($requester) === 0) {
+            return 0;
+        }
+        $friendship = Friend::where('requester', $requester)
+            ->where('user_requested', $this->id)
+            ->first();
+        if($friendship) {
+            $friendship->update([
+                'status' => 1
+            ]);
+            return 1;
+        }
+        return 0;
+    }
+
+    public function deny_friend($requester) {
+        if($this->has_pending_friend_request_from($requester) === 0) {
+            return 0;
+        }
+        $friendship = Friend::where('requester', $requester)
+            ->where('user_requested', $this->id)
+            ->first();
+        if($friendship) {
+            $friendship->delete();
+            return 1;
+        }
+        return 0;
+    }
+
     public function friends() {
         $friends = array();
         $f1 = Friend::where('status', 1)
