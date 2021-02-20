@@ -2012,6 +2012,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Accept__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Accept */ "./resources/js/Components/FriendStatus/Accept.vue");
 /* harmony import */ var _Components_Buttons_BlueButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Buttons/BlueButton */ "./resources/js/Components/Buttons/BlueButton.vue");
 /* harmony import */ var _Ignore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Ignore */ "./resources/js/Components/FriendStatus/Ignore.vue");
+/* harmony import */ var _Jetstream_DangerButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/DangerButton */ "./resources/js/Jetstream/DangerButton.vue");
 //
 //
 //
@@ -2029,6 +2030,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2037,11 +2052,15 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Accept: _Accept__WEBPACK_IMPORTED_MODULE_0__.default,
     BlueButton: _Components_Buttons_BlueButton__WEBPACK_IMPORTED_MODULE_1__.default,
-    Ignore: _Ignore__WEBPACK_IMPORTED_MODULE_2__.default
+    Ignore: _Ignore__WEBPACK_IMPORTED_MODULE_2__.default,
+    JetDangerButton: _Jetstream_DangerButton__WEBPACK_IMPORTED_MODULE_3__.default
   },
   data: function data() {
     return {
       addFriendForm: this.$inertia.form({
+        user: this.profile
+      }),
+      deleteFriendForm: this.$inertia.form({
         user: this.profile
       })
     };
@@ -2049,6 +2068,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addFriend: function addFriend() {
       this.addFriendForm.post(this.route('friends.store', this.profile.id), {
+        preserveScroll: true,
+        onSuccess: function onSuccess() {}
+      });
+    },
+    deleteFriend: function deleteFriend() {
+      this.deleteFriendForm["delete"](this.route('friends.destroy', this.profile.id), {
         preserveScroll: true,
         onSuccess: function onSuccess() {}
       });
@@ -28480,6 +28505,45 @@ var render = function() {
               staticClass: "ml-3",
               attrs: { profile: _vm.profile }
             })
+          ]
+        : _vm.friendRequestSentTo
+        ? [
+            _c(
+              "h3",
+              {
+                staticClass: "font-semibold text-md text-gray-800 leading-tight"
+              },
+              [_vm._v("\n            Pending\n        ")]
+            )
+          ]
+        : _vm.isFriendsWith
+        ? [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.deleteFriend($event)
+                  }
+                }
+              },
+              [
+                _c(
+                  "jet-danger-button",
+                  { attrs: { type: "submit" } },
+                  [
+                    _vm._v("\n                Unfriend\n                "),
+                    _c("icon", {
+                      staticClass: "w-4 h-4 fill-current ml-1",
+                      attrs: { name: "user-minus" }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            )
           ]
         : _vm.$page.props.user.id != _vm.profile.id
         ? [

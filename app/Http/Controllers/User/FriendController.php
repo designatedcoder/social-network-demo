@@ -83,12 +83,15 @@ class FriendController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(User $user) {
+        if (!$user) {
+            return back()->withErrors(['message' => 'This user could not be found']);
+        }
+        auth()->user()->delete_friend($user->id);
+        return back();
     }
 
     /**

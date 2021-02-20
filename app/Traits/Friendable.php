@@ -59,6 +59,26 @@ trait Friendable {
         return 0;
     }
 
+    public function delete_friend($user_requested_id) {
+		if($this->id === $user_requested_id) {
+            return 0;
+        }
+		if($this->is_friends_with($user_requested_id) === 1) {
+            $Friendship1 = Friend::where('requester', $user_requested_id)
+            ->where('user_requested', $this->id)
+            ->first();
+            if ($Friendship1) {
+                $Friendship1->delete();
+            }
+            $Friendship2 = Friend::where('user_requested', $user_requested_id)
+            ->where('requester', $this->id)
+            ->first();
+            if ($Friendship2) {
+                $Friendship2->delete();
+            }
+        }
+    }
+
     public function friends() {
         $friends = array();
         $f1 = Friend::where('status', 1)
