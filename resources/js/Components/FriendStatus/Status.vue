@@ -76,6 +76,10 @@
                 this.addFriendForm.post(this.route('friends.store', this.profile.id), {
                     preserveScroll: true,
                     onSuccess: ()=>{
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Friend request sent!'
+                        })
                         this.loading = false
                     },
                 })
@@ -85,6 +89,10 @@
                 this.deleteFriendForm.delete(this.route('friends.destroy', this.profile.id), {
                     preserveScroll: true,
                     onSuccess: ()=>{
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Friend has been removed!'
+                        })
                         this.loading = false
                     },
                 })

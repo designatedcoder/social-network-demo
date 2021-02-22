@@ -38,6 +38,10 @@
                 this.acceptFriendForm.patch(this.route('friends.update', this.profile.id), {
                     preserveScroll: true,
                     onSuccess:()=>{
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Successfully accepted request!'
+                        })
                         this.loading = false
                     }
                 })
