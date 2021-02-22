@@ -34659,7 +34659,8 @@ var render = function() {
   return _c(
     "aside",
     {
-      staticClass: "flex flex-col bg-white shadow py-6 w-full sm:w-1/3 lg:w-1/4"
+      staticClass:
+        "flex flex-col bg-white shadow py-6 w-full sm:w-1/3 lg:w-1/4 lg:pl-4"
     },
     _vm._l(_vm.sideBarLinks, function(link) {
       return _c(
