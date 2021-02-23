@@ -9,14 +9,17 @@
             </div>
         </template>
 
+        <combined-posts :posts="posts"></combined-posts>
     </pages-layout>
 </template>
 
 <script>
+    import CombinedPosts from '@/Components/PostComment/CombinedPosts'
     import PagesLayout from '@/Layouts/PagesLayout'
-
     export default {
+        props: ['posts'],
         components: {
+            CombinedPosts,
             PagesLayout,
         },
     }
