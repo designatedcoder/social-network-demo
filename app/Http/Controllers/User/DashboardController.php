@@ -14,7 +14,9 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', [
+            'posts' => auth()->user()->posts,
+        ]);
     }
 
     /**
