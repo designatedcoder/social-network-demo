@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 
 class DashboardController extends Controller
 {
@@ -14,8 +15,9 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        $combinedPosts = Post::allPosts()->latest()->paginate();
         return Inertia::render('Dashboard', [
-            'posts' => auth()->user()->posts,
+            'combinedPosts' => $combinedPosts,
         ]);
     }
 

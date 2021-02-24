@@ -18,6 +18,11 @@ class Post extends Model
      */
     protected $with = ['user'];
 
+    public function scopeAllPosts($query) {
+        return $query->where('user_id', auth()->id())
+        ->orWhereIn('user_id', auth()->user()->friends_ids());
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }
