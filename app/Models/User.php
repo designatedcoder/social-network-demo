@@ -78,6 +78,14 @@ class User extends Authenticatable
         return asset('/storage/images/default.png');
     }
 
+    public function scopeSuggestions($query) {
+        return $query->notAuth()->orWhereIn('id', auth()->user()->friends_ids());
+    }
+
+    public function scopeNotAuth() {
+        return $this->where('id', '!=', auth()->id());
+    }
+
     public function profile() {
         return $this->hasOne(Profile::class);
     }
