@@ -30,6 +30,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('user')->group(function(
 
     Route::prefix('posts')->name('posts.')->group(function() {
         Route::post('', [PostController::class, 'store'])->name('store');
+        Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('friends')->name('friends.')->group(function() {
