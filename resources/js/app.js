@@ -23,6 +23,10 @@ window.Toast = Swal.mixin({
 
 Vue.component('icon', require('./Components/Icon').default);
 
+Vue.filter('timeAgo', function(created) {
+    return moment(created).fromNow();
+})
+
 const app = document.getElementById('app');
 
 new Vue({
