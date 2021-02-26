@@ -7,6 +7,7 @@ use App\Http\Controllers\User\FriendController;
 use App\Http\Controllers\User\MemberController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\PostLikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +39,10 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('user')->group(function(
         Route::patch('/{user}', [FriendController::class, 'update'])->name('update');
         Route::get('/{user}', [FriendController::class, 'deny'])->name('deny');
         Route::delete('/{user}', [FriendController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('post-like')->name('post-like.')->group(function() {
+        Route::post('/{post}', [PostLikeController::class, 'store'])->name('store');
+        Route::delete('/{post}', [PostLikeController::class, 'destroy'])->name('destroy');
     });
 });

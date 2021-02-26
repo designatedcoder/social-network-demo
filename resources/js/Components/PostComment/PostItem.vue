@@ -31,12 +31,12 @@
 
             <div class="flex items-end my-3">
                 <div>
-                    <span class="text-sm italic">3 days ago</span>
+                    <span class="text-sm italic">{{ post.created_at | timeAgo }}</span>
                 </div>
 
                 <div class="flex ml-3">
-                    <span>Like</span>
-                    <span class="ml-2">Dislike</span>
+                    <like :item="post" :method="submitLike"></like>
+                    <dislike :item="post" :method="submitDislike" class="ml-2"></dislike>
                 </div>
             </div>
         </div>
@@ -44,12 +44,24 @@
 </template>
 
 <script>
+    import Dislike from '@/Components/PostComment/Likes/Dislike'
+    import Like from '@/Components/PostComment/Likes/Like'
     export default {
         props: ['post'],
+        components: {
+            Dislike,
+            Like,
+        },
         data() {
             return {
                 openMenu: false,
                 deleteForm: this.$inertia.form({
+                    userPost: this.post
+                }),
+                likeForm: this.$inertia.form({
+                    userPost: this.post
+                }),
+                dislikeForm: this.$inertia.form({
                     userPost: this.post
                 })
             }
@@ -71,6 +83,18 @@
                             title: 'Post has successfully been deleted!'
                         })
                     }
+                })
+            },
+            submitLike() {
+                this.likeForm.post(this.route('post-like.store', this.post), {
+                    preserveScroll: true,
+                    onSuccess:()=>{}
+                })
+            },
+            submitDislike() {
+                this.dislikeForm.delete(this.route('post-like.destroy', this.post), {
+                    preserveScroll: true,
+                    onSuccess:()=>{}
                 })
             }
         }
