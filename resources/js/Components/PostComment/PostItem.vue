@@ -39,22 +39,34 @@
                     <dislike :item="post" :method="submitDislike" class="ml-2"></dislike>
                 </div>
             </div>
+
+            <post-form :method="submit" :form="form" :text="'Comment'"></post-form>
+            
+            <combined-comments :comments="post.comments"></combined-comments>
         </div>
     </div>
 </template>
 
 <script>
+    import CombinedComments from '@/Components/PostComment/CombinedComments'
     import Dislike from '@/Components/PostComment/Likes/Dislike'
     import Like from '@/Components/PostComment/Likes/Like'
+    import PostForm from '@/Components/PostComment/PostForm'
     export default {
         props: ['post'],
         components: {
+            CombinedComments,
             Dislike,
             Like,
+            PostForm,
         },
         data() {
             return {
                 openMenu: false,
+                form: this.$inertia.form({
+                    body: this.body,
+                    user_id: this.post.user_id,
+                }),
                 deleteForm: this.$inertia.form({
                     userPost: this.post
                 }),
@@ -67,6 +79,18 @@
             }
         },
         methods: {
+            submit() {
+                this.form.post(this.route('comments.store', this.post), {
+                    preserveScroll: true,
+                    onSuccess:()=>{
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Your comment has successfully been published!'
+                        })
+                        this.form.body = null
+                    }
+                })
+            },
             deletePost() {
                 this.openMenu = false
                 this.deleteForm.delete(this.route('posts.destroy', this.post), {
