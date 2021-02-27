@@ -5,9 +5,10 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\User\PostController;
 use App\Http\Controllers\User\FriendController;
 use App\Http\Controllers\User\MemberController;
+use App\Http\Controllers\User\CommentController;
 use App\Http\Controllers\User\ProfileController;
-use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\PostLikeController;
+use App\Http\Controllers\User\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,10 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('user')->group(function(
     Route::prefix('posts')->name('posts.')->group(function() {
         Route::post('', [PostController::class, 'store'])->name('store');
         Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('comments')->name('comments.')->group(function() {
+        Route::post('/{post}/comments', [CommentController::class, 'store'])->name('store');
     });
 
     Route::prefix('friends')->name('friends.')->group(function() {
