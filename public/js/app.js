@@ -2292,6 +2292,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Components_PostComment_Likes_Dislike__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Components/PostComment/Likes/Dislike */ "./resources/js/Components/PostComment/Likes/Dislike.vue");
+/* harmony import */ var _Components_PostComment_Likes_Like__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/PostComment/Likes/Like */ "./resources/js/Components/PostComment/Likes/Like.vue");
 //
 //
 //
@@ -2322,8 +2324,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['comment']
+  props: ['comment'],
+  components: {
+    Dislike: _Components_PostComment_Likes_Dislike__WEBPACK_IMPORTED_MODULE_0__.default,
+    Like: _Components_PostComment_Likes_Like__WEBPACK_IMPORTED_MODULE_1__.default
+  },
+  data: function data() {
+    return {
+      likeForm: this.$inertia.form({
+        comment: this.comment
+      }),
+      dislikeForm: this.$inertia.form({
+        comment: this.comment
+      })
+    };
+  },
+  methods: {
+    submitLike: function submitLike() {
+      this.likeForm.post(this.route('comment-like.store', this.comment.id), {
+        preserveScroll: true,
+        onSuccess: function onSuccess() {}
+      });
+    },
+    submitDislike: function submitDislike() {
+      this.dislikeForm["delete"](this.route('comment-like.destroy', this.comment.id), {
+        preserveScroll: true,
+        onSuccess: function onSuccess() {}
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -5852,8 +5884,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Layouts_PagesLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/PagesLayout */ "./resources/js/Layouts/PagesLayout.vue");
-/* harmony import */ var _Components_FriendStatus_Status__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/FriendStatus/Status */ "./resources/js/Components/FriendStatus/Status.vue");
+/* harmony import */ var _Components_PostComment_CombinedPosts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Components/PostComment/CombinedPosts */ "./resources/js/Components/PostComment/CombinedPosts.vue");
+/* harmony import */ var _Layouts_PagesLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/PagesLayout */ "./resources/js/Layouts/PagesLayout.vue");
+/* harmony import */ var _Components_PostComment_PostForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/PostComment/PostForm */ "./resources/js/Components/PostComment/PostForm.vue");
+/* harmony import */ var _Components_FriendStatus_Status__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/FriendStatus/Status */ "./resources/js/Components/FriendStatus/Status.vue");
 //
 //
 //
@@ -5870,13 +5904,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['profile', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom'],
+  props: ['profile', 'posts', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom'],
   components: {
-    PagesLayout: _Layouts_PagesLayout__WEBPACK_IMPORTED_MODULE_0__.default,
-    Status: _Components_FriendStatus_Status__WEBPACK_IMPORTED_MODULE_1__.default
+    CombinedPosts: _Components_PostComment_CombinedPosts__WEBPACK_IMPORTED_MODULE_0__.default,
+    PagesLayout: _Layouts_PagesLayout__WEBPACK_IMPORTED_MODULE_1__.default,
+    PostForm: _Components_PostComment_PostForm__WEBPACK_IMPORTED_MODULE_2__.default,
+    Status: _Components_FriendStatus_Status__WEBPACK_IMPORTED_MODULE_3__.default
+  },
+  data: function data() {
+    return {
+      form: this.$inertia.form({
+        body: this.body,
+        user_id: this.profile.id
+      })
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      this.form.post(this.route('posts.store'), {
+        preserveScroll: true,
+        onSuccess: function onSuccess() {
+          Toast.fire({
+            icon: 'success',
+            title: 'Your post has successfully been published!'
+          });
+          _this.form.body = null;
+        }
+      });
+    }
   }
 });
 
@@ -35998,24 +36064,27 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c(
+            "div",
+            { staticClass: "flex ml-3" },
+            [
+              _c("like", {
+                attrs: { item: _vm.comment, method: _vm.submitLike }
+              }),
+              _vm._v(" "),
+              _c("dislike", {
+                staticClass: "ml-2",
+                attrs: { item: _vm.comment, method: _vm.submitDislike }
+              })
+            ],
+            1
+          )
         ])
       ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex ml-3" }, [
-      _c("span", [_vm._v("Like")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v("Dislike")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -41901,54 +41970,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("pages-layout", {
-    scopedSlots: _vm._u([
-      {
-        key: "title",
-        fn: function() {
-          return [
-            _c(
-              "div",
-              { staticClass: "flex justify-between items-center w-full" },
-              [
-                _c(
-                  "h2",
-                  {
-                    staticClass:
-                      "flex items-end font-semibold text-xl text-gray-800 leading-tight"
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "h-8 w-8 rounded-full object-cover",
-                      attrs: {
-                        src: _vm.profile.profile_photo_url,
-                        alt: _vm.profile.username
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "capitalize ml-3" }, [
-                      _vm._v(_vm._s(_vm.profile.username + "'s Profile"))
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("status", {
-                  attrs: {
-                    profile: _vm.profile,
-                    isFriendsWith: _vm.isFriendsWith,
-                    friendRequestSentTo: _vm.friendRequestSentTo,
-                    friendRequestRecievedFrom: _vm.friendRequestRecievedFrom
-                  }
-                })
-              ],
-              1
-            )
-          ]
-        },
-        proxy: true
-      }
-    ])
-  })
+  return _c(
+    "pages-layout",
+    {
+      scopedSlots: _vm._u([
+        {
+          key: "title",
+          fn: function() {
+            return [
+              _c(
+                "div",
+                { staticClass: "flex justify-between items-center w-full" },
+                [
+                  _c(
+                    "h2",
+                    {
+                      staticClass:
+                        "flex items-end font-semibold text-xl text-gray-800 leading-tight"
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "h-8 w-8 rounded-full object-cover",
+                        attrs: {
+                          src: _vm.profile.profile_photo_url,
+                          alt: _vm.profile.username
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "capitalize ml-3" }, [
+                        _vm._v(_vm._s(_vm.profile.username + "'s Profile"))
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("status", {
+                    attrs: {
+                      profile: _vm.profile,
+                      isFriendsWith: _vm.isFriendsWith,
+                      friendRequestSentTo: _vm.friendRequestSentTo,
+                      friendRequestRecievedFrom: _vm.friendRequestRecievedFrom
+                    }
+                  })
+                ],
+                1
+              )
+            ]
+          },
+          proxy: true
+        }
+      ])
+    },
+    [
+      _vm._v(" "),
+      _c("post-form", {
+        attrs: { method: _vm.submit, form: _vm.form, text: "Post" }
+      }),
+      _vm._v(" "),
+      _c("combined-posts", { attrs: { posts: _vm.posts.data } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
