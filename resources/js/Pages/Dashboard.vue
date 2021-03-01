@@ -13,12 +13,15 @@
 
         <suggestion-block :suggestions="suggestions"></suggestion-block>
 
-        <combined-posts :posts="combinedPosts.data"></combined-posts>
+        <infinite-scroll @loadMore="loadMorePosts">
+            <combined-posts :posts="allPosts.data"></combined-posts>
+        </infinite-scroll>
     </pages-layout>
 </template>
 
 <script>
     import CombinedPosts from '@/Components/PostComment/CombinedPosts'
+    import InfiniteScroll from '@/Components/InfiniteScroll'
     import PagesLayout from '@/Layouts/PagesLayout'
     import PostForm from '@/Components/PostComment/PostForm'
     import SuggestionBlock from '@/Components/SuggestionBlock'
@@ -26,6 +29,7 @@
         props: ['combinedPosts', 'suggestions'],
         components: {
             CombinedPosts,
+            InfiniteScroll,
             PagesLayout,
             PostForm,
             SuggestionBlock,
@@ -35,7 +39,8 @@
                 form: this.$inertia.form({
                     user_id: this.$page.props.user.id,
                     body: this.body
-                })
+                }),
+                allPosts: this.combinedPosts
             }
         },
         methods: {
@@ -50,6 +55,20 @@
                         this.form.body = null
                     }
                 })
+            },
+            loadMorePosts() {
+                if (!this.allPosts.next_page_url) {
+                    return
+                }
+                return axios.get(this.allPosts.next_page_url)
+                    .then(resp => {
+                        this.allPosts = {
+                            ...resp.data,
+                            data: [
+                                ...this.allPosts.data, ...resp.data.data
+                            ]
+                        }
+                    })
             }
         }
     }

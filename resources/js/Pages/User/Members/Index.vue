@@ -13,19 +13,43 @@
                 </span>
             </div>
         </template>
-
-        <user-block :items="members"></user-block>
+        <infinite-scroll @loadMore="loadMoreMembers">
+            <user-block :items="allMembers.data"></user-block>
+        </infinite-scroll>
     </pages-layout>
 </template>
 
 <script>
+    import InfiniteScroll from '@/Components/InfiniteScroll'
     import PagesLayout from '@/Layouts/PagesLayout'
     import UserBlock from '@/Components/UserBlock'
     export default {
         props: ['members'],
         components: {
+            InfiniteScroll,
             PagesLayout,
             UserBlock,
-        }
+        },
+        data() {
+            return {
+                allMembers: this.members
+            }
+        },
+        methods: {
+            loadMoreMembers() {
+                if (!this.allMembers.next_page_url) {
+                    return
+                }
+                return axios.get(this.allMembers.next_page_url)
+                    .then(resp => {
+                        this.allMembers = {
+                            ...resp.data,
+                            data: [
+                                ...this.allMembers.data, ...resp.data.data
+                            ]
+                        }
+                    })
+            }
+        },
     }
 </script>

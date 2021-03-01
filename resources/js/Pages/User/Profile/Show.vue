@@ -13,13 +13,16 @@
 
         <post-form :method="submit" :form="form" :text="'Post'"></post-form>
 
-        <combined-posts :posts="posts.data"></combined-posts>
+        <infinite-scroll @loadMore="loadMorePosts">
+            <combined-posts :posts="allPosts.data"></combined-posts>
+        </infinite-scroll>
 
     </pages-layout>
 </template>
 
 <script>    
     import CombinedPosts from '@/Components/PostComment/CombinedPosts'
+    import InfiniteScroll from '@/Components/InfiniteScroll'
     import PagesLayout from '@/Layouts/PagesLayout'
     import PostForm from '@/Components/PostComment/PostForm'
     import Status from '@/Components/FriendStatus/Status'
@@ -27,6 +30,7 @@
         props: ['profile', 'posts', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom'],
         components: {
             CombinedPosts,
+            InfiniteScroll,
             PagesLayout,
             PostForm,
             Status
@@ -36,7 +40,8 @@
                 form: this.$inertia.form({
                     body: this.body,
                     user_id: this.profile.id
-                })
+                }),
+                allPosts: this.posts
             }
         },
         methods: {
@@ -51,6 +56,20 @@
                         this.form.body = null
                     }
                 })
+            },
+            loadMorePosts() {
+                if (!this.allPosts.next_page_url) {
+                    return
+                }
+                return axios.get(this.allPosts.next_page_url)
+                    .then(resp => {
+                        this.allPosts = {
+                            ...resp.data,
+                            data: [
+                                ...this.allPosts.data, ...resp.data.data
+                            ]
+                        }
+                    })
             }
         }
     }
