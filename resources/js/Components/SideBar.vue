@@ -19,6 +19,8 @@
 
                     { name: 'Edit Profile', route: route('profile.show'), icon: 'user-edit' },
 
+                    { name: 'Friends', route: route('friends.index'), icon: 'user-friends' },
+
                     { name: 'Members', route: route('members.index'), icon: 'users' },
                 ]
             }

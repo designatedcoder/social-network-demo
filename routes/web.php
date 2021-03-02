@@ -41,6 +41,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('user')->group(function(
     });
 
     Route::prefix('friends')->name('friends.')->group(function() {
+        Route::get('', [FriendController::class, 'index'])->name('index');
         Route::post('/{user}', [FriendController::class, 'store'])->name('store');
         Route::patch('/{user}', [FriendController::class, 'update'])->name('update');
         Route::get('/{user}', [FriendController::class, 'deny'])->name('deny');

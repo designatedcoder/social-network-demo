@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class FriendController extends Controller
 {
@@ -13,9 +14,11 @@ class FriendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        return Inertia::render('User/Friends/Index', [
+            'friends' => auth()->user()->friends(),
+            'requests' => auth()->user()->pending_friend_requests(),
+        ]);
     }
 
     /**
