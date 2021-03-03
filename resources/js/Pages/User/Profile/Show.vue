@@ -14,13 +14,13 @@
         <post-form :method="submit" :form="form" :text="'Post'"></post-form>
 
         <infinite-scroll @loadMore="loadMorePosts">
-            <combined-posts :posts="allPosts.data"></combined-posts>
+            <combined-posts :posts="allPosts.data" :pagination="pagination"></combined-posts>
         </infinite-scroll>
 
     </pages-layout>
 </template>
 
-<script>    
+<script>
     import CombinedPosts from '@/Components/PostComment/CombinedPosts'
     import InfiniteScroll from '@/Components/InfiniteScroll'
     import PagesLayout from '@/Layouts/PagesLayout'
@@ -42,6 +42,11 @@
                     user_id: this.profile.id
                 }),
                 allPosts: this.posts
+            }
+        },
+        computed: {
+            pagination() {
+                return this.allPosts = this.posts
             }
         },
         methods: {
