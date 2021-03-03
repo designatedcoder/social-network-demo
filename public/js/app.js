@@ -6141,6 +6141,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       allPosts: this.posts
     };
   },
+  computed: {
+    pagination: function pagination() {
+      return this.allPosts = this.posts;
+    }
+  },
   methods: {
     submit: function submit() {
       var _this = this;
@@ -42597,7 +42602,11 @@ var render = function() {
       _c(
         "infinite-scroll",
         { on: { loadMore: _vm.loadMorePosts } },
-        [_c("combined-posts", { attrs: { posts: _vm.allPosts.data } })],
+        [
+          _c("combined-posts", {
+            attrs: { posts: _vm.allPosts.data, pagination: _vm.pagination }
+          })
+        ],
         1
       )
     ],
