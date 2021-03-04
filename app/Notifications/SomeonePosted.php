@@ -2,10 +2,11 @@
 
 namespace App\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class SomeonePosted extends Notification
 {
@@ -29,7 +30,7 @@ class SomeonePosted extends Notification
      * @return array
      */
     public function via($notifiable) {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -50,10 +51,14 @@ class SomeonePosted extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
-    {
+    public function toArray($notifiable) {
         return [
-            //
+            'info' => [
+                'message' => $this->user->username." has posted on your timeline.",
+                'link' => route('dashboard.index'),
+                'avatar' => $this->user->profile_photo_url,
+                'sent' => Carbon::now(),
+            ]
         ];
     }
 }
