@@ -115,7 +115,7 @@
                     name: this.user.name,
                     username: this.user.username,
                     email: this.user.email,
-                    gender: this.user.profile.gender,
+                    gender: this.$page.props.auth.profile.gender,
                     photo: null,
                 }),
 

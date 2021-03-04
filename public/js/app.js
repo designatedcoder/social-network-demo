@@ -2219,6 +2219,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['name']
 });
@@ -3809,6 +3813,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3824,7 +3847,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      showingNavigationDropdown: false
+      showingNavigationDropdown: false,
+      unreadNotifications: this.$page.props.auth.unreadNotifications,
+      readNotifications: this.$page.props.auth.readNotifications,
+      notifications: this.$page.props.auth.notifications
     };
   },
   methods: {
@@ -5828,7 +5854,7 @@ __webpack_require__.r(__webpack_exports__);
         name: this.user.name,
         username: this.user.username,
         email: this.user.email,
-        gender: this.user.profile.gender,
+        gender: this.$page.props.auth.profile.gender,
         photo: null
       }),
       photoPreview: null
@@ -36301,6 +36327,28 @@ var render = function() {
             })
           ]
         )
+      : _vm.name === "bell"
+      ? _c(
+          "svg",
+          {
+            staticClass: "svg-inline--fa fa-bell fa-w-14",
+            attrs: {
+              "aria-hidden": "true",
+              "data-prefix": "fas",
+              "data-icon": "bell",
+              xmlns: "http://www.w3.org/2000/svg",
+              viewBox: "0 0 448 512"
+            }
+          },
+          [
+            _c("path", {
+              attrs: {
+                d:
+                  "M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z"
+              }
+            })
+          ]
+        )
       : _vm._e()
   ])
 }
@@ -38683,6 +38731,63 @@ var render = function() {
                                   1
                                 )
                               ]
+                            },
+                            proxy: true
+                          }
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("jet-dropdown", {
+                        attrs: { align: "right", width: "96" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "trigger",
+                            fn: function() {
+                              return [
+                                _c(
+                                  "button",
+                                  { staticClass: "mt-1 focus:outline-none" },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "flex ml-2 relative" },
+                                      [
+                                        _c("icon", {
+                                          staticClass: "w-6 h-6",
+                                          attrs: { name: "bell" }
+                                        }),
+                                        _vm._v(" "),
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "text-white text-xs bg-red-600 rounded-full px-2 py-1 absolute bottom-2 left-3"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                " +
+                                                  _vm._s(
+                                                    _vm.notifications.length
+                                                  ) +
+                                                  "\n                                            "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      ],
+                                      2
+                                    )
+                                  ]
+                                )
+                              ]
+                            },
+                            proxy: true
+                          },
+                          {
+                            key: "content",
+                            fn: function() {
+                              return undefined
                             },
                             proxy: true
                           }
