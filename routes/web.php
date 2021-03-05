@@ -10,6 +10,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\PostLikeController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\CommentLikeController;
+use App\Http\Controllers\User\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,12 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('user')->group(function(
         Route::post('/{comment}', [CommentLikeController::class, 'store'])->name('store');
         Route::delete('/{comment}', [CommentLikeController::class, 'destroy'])->name('destroy');
     });
+
+    Route::prefix('notifications')->name('notifications.')->group(function() {
+        Route::post('/mark-one/{id}', [NotificationController::class, 'store'])->name('store');
+        Route::get('/mark-all', [NotificationController::class, 'update'])->name('update');
+        Route::get('/mark-delete/{id}', [NotificationController::class, 'destroy'])->name('destroy');
+    });
+
+
 });
