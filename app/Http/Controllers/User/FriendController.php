@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\FriendRequestAcceptedEvent;
+use App\Events\FriendRequestReceivedEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -43,6 +45,7 @@ class FriendController extends Controller
             return back()->withErrors(['message' => 'This user could not be found']);
         }
         auth()->user()->add_friend($user->id);
+        event(new FriendRequestReceivedEvent($user));
         return back();
     }
 
@@ -80,6 +83,7 @@ class FriendController extends Controller
             return back()->withErrors(['message' => 'This user could not be found']);
         }
         auth()->user()->accept_friend($user->id);
+        event(new FriendRequestAcceptedEvent($user));
         return back();
     }
 
