@@ -191,7 +191,29 @@
             }
         },
 
+        mounted() {
+            this.listen()
+        },
+
         methods: {
+            listen() {
+                Echo.private(`App.Models.User.${this.$page.props.user.id}`)
+                    .notification((notification) => {
+                        let newUnreadNotifications = {
+                            data: {
+                                info: {
+                                    avatar: notification.info.avatar,
+                                    message: notification.info.message,
+                                    link: notification.info.link,
+                                    sent: notification.info.sent,
+                                }
+                            },
+                            id: notification.id
+                        }
+                        this.unreadNotifications.push(newUnreadNotifications)
+                        this.notifications.push(newUnreadNotifications)
+                    })
+            },
             logout() {
                 this.$inertia.post(route('logout'));
             },
