@@ -22,6 +22,8 @@
                     { name: 'Friends', route: route('friends.index'), icon: 'user-friends' },
 
                     { name: 'Members', route: route('members.index'), icon: 'users' },
+
+                    { name: 'Chat Rooms', route: route('chat-rooms.index'), icon: 'comments'},
                 ]
             }
         }
