@@ -19,7 +19,7 @@
                             <td class="text-left pl-3 py-3">{{ room.name }}</td>
                             <td class="text-center py-3">{{ room.active }}</td>
                             <td class="text-right pr-3 py-3">
-                                <green-button href="#" class="text-xs">Join</green-button>
+                                <green-button :href="route('chat-rooms.show', room.slug)" class="text-xs">Join</green-button>
                             </td>
                         </tr>
                     </tbody>
