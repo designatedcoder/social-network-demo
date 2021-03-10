@@ -26,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         \App\Events\FriendRequestAcceptedEvent::class => [
             \App\Listeners\FriendRequestAcceptedListener::class,
+        ],
+        \App\Events\NewChatMessageEvent::class => [
+            \App\Listeners\NewChatMessageListener::class,
         ]
     ];
 
