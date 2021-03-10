@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
 use App\Models\Room;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Message;
+use Illuminate\Http\Request;
+use App\Events\NewChatMessageEvent;
+use App\Http\Controllers\Controller;
 
 class RoomController extends Controller
 {
@@ -34,11 +36,16 @@ class RoomController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Room $room
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request, Room $room) {
+        $message = $room->messages()->create([
+            'body' => $request->body,
+            'user_id' => auth()->id()
+        ]);
+        broadcast(new NewChatMessageEvent($message, auth()->user()))->toOthers();
+        return back();
     }
 
     /**
@@ -47,9 +54,15 @@ class RoomController extends Controller
      * @param  \App\Models\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
-    {
-        //
+    public function show(Room $room) {
+        $messages = Message::where('room_id', $room->id)
+            ->with('user')
+            ->oldest()
+            ->get();
+        return Inertia::render('User/ChatRooms/Show', [
+            'room' => $room,
+            'messages' => $messages,
+        ]);
     }
 
     /**
