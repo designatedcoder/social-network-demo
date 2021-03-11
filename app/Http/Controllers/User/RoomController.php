@@ -83,9 +83,10 @@ class RoomController extends Controller
      * @param  \App\Models\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
-    {
-        //
+    public function update(Request $request, Room $room) {
+        $room->active = $request->count;
+        $room->update();
+        return back();
     }
 
     /**

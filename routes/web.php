@@ -69,6 +69,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('user')->group(function(
     Route::prefix('chat/rooms')->name('chat-rooms.')->group(function() {
         Route::get('', [RoomController::class, 'index'])->name('index');
         Route::get('/{room:slug}', [RoomController::class, 'show'])->name('show');
+        Route::post('/{room:slug}', [RoomController::class, 'update'])->name('update');
         Route::post('/{room:slug}/messages', [RoomController::class, 'store'])->name('store');
     });
 });
