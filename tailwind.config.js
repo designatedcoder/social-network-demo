@@ -14,6 +14,9 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
                 primary: ['Montserrat'],
             },
+            spacing: {
+                '128': '32rem',
+            },
         },
     },
 
