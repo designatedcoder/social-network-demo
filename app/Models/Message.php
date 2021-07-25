@@ -11,6 +11,17 @@ class Message extends Model
 
     protected $fillable = ['body', 'user_id', 'room_id'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['timeAgo'];
+
+    public function getTimeAgoAttribute() {
+        return $this->created_at->diffForHumans();
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }

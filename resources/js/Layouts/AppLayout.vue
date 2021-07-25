@@ -158,10 +158,7 @@
                 <slot></slot>
             </main>
         </div>
-
-        <!-- Modal Portal -->
-        <portal-target name="modal" multiple>
-        </portal-target>
+        
     </div>
 </template>
 

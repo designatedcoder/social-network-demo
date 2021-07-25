@@ -24,8 +24,12 @@ class Post extends Model
      * @var array
      */
     protected $appends = [
-        'liked', 'disliked',
+        'liked', 'disliked', 'timeAgo'
     ];
+
+    public function getTimeAgoAttribute() {
+        return $this->created_at->diffForHumans();
+    }
 
     public function getLikedAttribute() {
         return $this->likes()->where('like', 1)

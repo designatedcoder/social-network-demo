@@ -17,7 +17,7 @@
             </div>
             <div class="flex items-end my-3">
                 <div>
-                    <span class="text-sm italic">{{ comment.created_at | timeAgo }}</span>
+                    <span class="text-sm italic">{{ comment.timeAgo }}</span>
                 </div>
                 <div class="flex ml-3">
                     <like :item="comment" :method="submitLike"></like>

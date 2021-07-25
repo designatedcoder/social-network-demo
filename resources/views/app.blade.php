@@ -13,7 +13,6 @@
 
         <!-- Scripts -->
         @routes
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>

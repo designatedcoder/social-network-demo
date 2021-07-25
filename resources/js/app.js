@@ -1,13 +1,9 @@
 require('./bootstrap');
-
 // Import modules...
-import Vue from 'vue';
-import { App as InertiaApp, plugin as InertiaPlugin } from '@inertiajs/inertia-vue';
-import PortalVue from 'portal-vue';
-
-Vue.mixin({ methods: { route } });
-Vue.use(InertiaPlugin);
-Vue.use(PortalVue);
+import { createApp, h } from 'vue';
+import { App as InertiaApp, plugin as InertiaPlugin } from '@inertiajs/inertia-vue3';
+import { InertiaProgress } from '@inertiajs/progress';
+import Icon from './Components/Icon';
 
 window.Toast = Swal.mixin({
     toast: true,
@@ -21,20 +17,18 @@ window.Toast = Swal.mixin({
     }
 })
 
-Vue.component('icon', require('./Components/Icon').default);
+const el = document.getElementById('app');
 
-Vue.filter('timeAgo', function(created) {
-    return moment(created).fromNow();
-})
-
-const app = document.getElementById('app');
-
-new Vue({
-    render: (h) =>
+createApp({
+    render: () =>
         h(InertiaApp, {
-            props: {
-                initialPage: JSON.parse(app.dataset.page),
-                resolveComponent: (name) => require(`./Pages/${name}`).default,
-            },
+            initialPage: JSON.parse(el.dataset.page),
+            resolveComponent: (name) => require(`./Pages/${name}`).default,
         }),
-}).$mount(app);
+})
+    .mixin({ methods: { route } })
+    .use(InertiaPlugin)
+    .component('icon', Icon)
+    .mount(el);
+
+InertiaProgress.init({ color: '#4B5563' });

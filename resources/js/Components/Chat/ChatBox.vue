@@ -11,7 +11,7 @@
             </div>
             <div class="flex flex-col">
                 <p class="text-sm">{{ message.body }}</p>
-                <p class="text-xs italic">{{ message.created_at | timeAgo }}</p>
+                <p class="text-xs italic">{{ message.timeAgo }}</p>
             </div>
         </div>
     </div>
